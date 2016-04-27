@@ -1,0 +1,90 @@
+{
+  "instanceId": "0",
+  "sku": {
+    "name": "Standard_A2",
+    "tier": "Standard"
+  },
+  "properties": {
+    "latestModelApplied": true,
+    "storageProfile": {
+      "imageReference": {
+        "publisher": "MicrosoftWindowsServer",
+        "offer": "WindowsServer",
+        "sku": "2012-R2-Datacenter",
+        "version": "4.0.20160126"
+      },
+      "osDisk": {
+        "osType": "Windows",
+        "name": "vmssosdisk-os-0-63332afae5d146e7b577c52a480cc18b",
+        "createOption": "FromImage",
+        "vhd": {
+          "uri": "http://sfvmpaolo6813.blob.core.windows.net/vhds/vmssosdisk-os-0-63332afae5d146e7b577c52a480cc18b.vhd"
+        },
+        "caching": "ReadOnly"
+      }
+    },
+    "osProfile": {
+      "computerName": "Node-0",
+      "adminUsername": "Paolo",
+      "windowsConfiguration": {
+        "provisionVMAgent": true,
+        "enableAutomaticUpdates": true
+      },
+      "secrets": []
+    },
+    "networkProfile": {
+      "networkInterfaces": [
+        {
+          "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/Node/virtualMachines/0/networkInterfaces/NIC-paolo-0"
+        }
+      ]
+    },
+    "provisioningState": "Succeeded"
+  },
+  "resources": [
+    {
+      "properties": {
+        "publisher": "Microsoft.Azure.ServiceFabric",
+        "type": "ServiceFabricNode",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "clusterEndpoint": "https://westeurope.servicefabric.azure.com/runtime/clusters/8ef97992-e2e7-460a-87b1-54c567d6c636",
+          "nodeTypeRef": "Node"
+        },
+        "provisioningState": "Succeeded"
+      },
+      "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachines/Node_0/extensions/Node_ServiceFabricNode",
+      "name": "Node_ServiceFabricNode",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "westeurope"
+    },
+    {
+      "properties": {
+        "publisher": "Microsoft.VisualStudio.Azure.ETWTraceListenerService",
+        "type": "VSETWTraceListenerService",
+        "typeHandlerVersion": "0.7",
+        "autoUpgradeMinorVersion": false,
+        "settings": {
+          "EtwEncryptionKey": {
+            "Key": "110 204 160 23 75 226 171 108 80 225 186 9 6 83 54 13 36 170 150 40 194 47 29 80 75 37 13 8 1 35 241 92",
+            "IV": "62 124 68 58 169 184 207 58 36 177 47 168 32 60 177 55"
+          }
+        },
+        "provisioningState": "Succeeded"
+      },
+      "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachines/Node_0/extensions/VsEtwListenerService-mrklzfr7qb",
+      "name": "VsEtwListenerService-mrklzfr7qb",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "westeurope"
+    }
+  ],
+  "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/Node/virtualMachines/0",
+  "name": "Node_0",
+  "type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines",
+  "location": "westeurope",
+  "tags": {
+    "resourceType": "Service Fabric",
+    "clusterName": "paolo"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "sku": {
+    "name": "Standard_A2",
+    "tier": "Standard",
+    "capacity": 5
+  },
+  "properties": {
+    "upgradePolicy": {
+      "mode": "Automatic"
+    },
+    "virtualMachineProfile": {
+      "osProfile": {
+        "computerNamePrefix": "Node",
+        "adminUsername": "paolos",
+        "windowsConfiguration": {
+          "provisionVMAgent": true,
+          "enableAutomaticUpdates": true
+        },
+        "secrets": [ ]
+      },
+      "storageProfile": {
+        "osDisk": {
+          "vhdContainers": [
+            "http://sfvmbabo7415.blob.core.windows.net/vhds"
+          ],
+          "name": "vmssosdisk",
+          "createOption": "FromImage",
+          "caching": "ReadOnly"
+        },
+        "imageReference": {
+          "publisher": "MicrosoftWindowsServer",
+          "offer": "WindowsServer",
+          "sku": "2012-R2-Datacenter",
+          "version": "latest"
+        }
+      },
+      "networkProfile": {
+        "networkInterfaceConfigurations": [
+          {
+            "name": "NIC-babo-0",
+            "properties": {
+              "primary": true,
+              "ipConfigurations": [
+                {
+                  "name": "NIC-babo-0",
+                  "properties": {
+                    "subnet": {
+                      "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/BaboServiceFabricResourceGroup/providers/Microsoft.Network/virtualNetworks/VNet-babo/subnets/Subnet-1"
+                    },
+                    "loadBalancerBackendAddressPools": [
+                      {
+                        "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/BaboServiceFabricResourceGroup/providers/Microsoft.Network/loadBalancers/LB-babo-0/backendAddressPools/LoadBalancerBEAddressPool"
+                      }
+                    ],
+                    "loadBalancerInboundNatPools": [
+                      {
+                        "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/BaboServiceFabricResourceGroup/providers/Microsoft.Network/loadBalancers/LB-babo-0/inboundNatPools/LoadBalancerBEAddressNatPool"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "extensionProfile": {
+        "extensions": [
+          {
+            "properties": {
+              "publisher": "Microsoft.Azure.ServiceFabric",
+              "type": "ServiceFabricNode",
+              "typeHandlerVersion": "1.0",
+              "autoUpgradeMinorVersion": false,
+              "settings": {
+                "clusterEndpoint": "https://westeurope.servicefabric.azure.com/runtime/clusters/4c5af672-280c-42b7-85d4-93bf8b7e402c",
+                "nodeTypeRef": "Node"
+              }
+            },
+            "name": "Node_ServiceFabricNode"
+          },
+          {
+            "properties": {
+              "publisher": "Microsoft.Azure.Diagnostics",
+              "type": "IaaSDiagnostics",
+              "typeHandlerVersion": "1.5",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                "WadCfg": {
+                  "DiagnosticMonitorConfiguration": {
+                    "overallQuotaInMB": "50000",
+                    "EtwProviders": {
+                      "EtwEventSourceProviderConfiguration": [
+                        {
+                          "provider": "Microsoft-ServiceFabric-Actors",
+                          "scheduledTransferKeywordFilter": "1",
+                          "scheduledTransferPeriod": "PT5M",
+                          "DefaultEvents": {
+                            "eventDestination": "ServiceFabricReliableActorEventTable"
+                          }
+                        },
+                        {
+                          "provider": "Microsoft-ServiceFabric-Services",
+                          "scheduledTransferPeriod": "PT5M",
+                          "DefaultEvents": {
+                            "eventDestination": "ServiceFabricReliableServiceEventTable"
+                          }
+                        }
+                      ],
+                      "EtwManifestProviderConfiguration": [
+                        {
+                          "provider": "cbd93bc2-71e5-4566-b3a7-595d8eeca6e8",
+                          "scheduledTransferLogLevelFilter": "Information",
+                          "scheduledTransferKeywordFilter": "4611686018427387904",
+                          "scheduledTransferPeriod": "PT5M",
+                          "DefaultEvents": {
+                            "eventDestination": "ServiceFabricSystemEventTable"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "StorageAccount": "sfdgbabo1848"
+              }
+            },
+            "name": "Node_Microsoft.Insights.VMDiagnosticsSettings"
+          }
+        ]
+      }
+    },
+    "provisioningState": "Creating"
+  },
+  "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/BaboServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/Node",
+  "name": "Node",
+  "type": "Microsoft.Compute/virtualMachineScaleSets",
+  "location": "westeurope",
+  "tags": {
+    "resourceType": "Service Fabric",
+    "clusterName": "babo"
+  }
+}

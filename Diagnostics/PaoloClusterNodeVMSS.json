@@ -1,0 +1,117 @@
+{
+  "value": [
+    {
+      "sku": {
+        "name": "Standard_A2",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "upgradePolicy": {
+          "mode": "Automatic"
+        },
+        "virtualMachineProfile": {
+          "osProfile": {
+            "computerNamePrefix": "Node",
+            "adminUsername": "Paolo",
+            "windowsConfiguration": {
+              "provisionVMAgent": true,
+              "enableAutomaticUpdates": true
+            },
+            "secrets": []
+          },
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "http://sfvmpaolo6813.blob.core.windows.net/vhds"
+              ],
+              "name": "vmssosdisk",
+              "createOption": "FromImage",
+              "caching": "ReadOnly"
+            },
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "2012-R2-Datacenter",
+              "version": "latest"
+            }
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "NIC-paolo-0",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "NIC-paolo-0",
+                      "properties": {
+                        "subnet": {
+                          "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Network/virtualNetworks/VNet-paolo/subnets/Subnet-1"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Network/loadBalancers/LB-paolo-0/backendAddressPools/LoadBalancerBEAddressPool"
+                          }
+                        ],
+                        "loadBalancerInboundNatPools": [
+                          {
+                            "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Network/loadBalancers/LB-paolo-0/inboundNatPools/LoadBalancerBEAddressNatPool"
+                          },
+                          {
+                            "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Network/loadBalancers/LB-paolo-0/inboundNatPools/EtwListenerNatPool-qd2ogtczmm"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "properties": {
+                  "publisher": "Microsoft.Azure.ServiceFabric",
+                  "type": "ServiceFabricNode",
+                  "typeHandlerVersion": "1.0",
+                  "autoUpgradeMinorVersion": false,
+                  "settings": {
+                    "clusterEndpoint": "https://westeurope.servicefabric.azure.com/runtime/clusters/8ef97992-e2e7-460a-87b1-54c567d6c636",
+                    "nodeTypeRef": "Node"
+                  }
+                },
+                "name": "Node_ServiceFabricNode"
+              },
+              {
+                "properties": {
+                  "publisher": "Microsoft.VisualStudio.Azure.ETWTraceListenerService",
+                  "type": "VSETWTraceListenerService",
+                  "typeHandlerVersion": "0.7",
+                  "autoUpgradeMinorVersion": false,
+                  "settings": {
+                    "EtwEncryptionKey": {
+                      "Key": "110 204 160 23 75 226 171 108 80 225 186 9 6 83 54 13 36 170 150 40 194 47 29 80 75 37 13 8 1 35 241 92",
+                      "IV": "62 124 68 58 169 184 207 58 36 177 47 168 32 60 177 55"
+                    }
+                  }
+                },
+                "name": "VsEtwListenerService-mrklzfr7qb"
+              }
+            ]
+          }
+        },
+        "provisioningState": "Succeeded"
+      },
+      "id": "/subscriptions/1a45a694-ae23-4650-9774-89a571c462f6/resourceGroups/PaoloServiceFabricResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/Node",
+      "name": "Node",
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "location": "westeurope",
+      "tags": {
+        "resourceType": "Service Fabric",
+        "clusterName": "paolo"
+      }
+    }
+  ]
+}

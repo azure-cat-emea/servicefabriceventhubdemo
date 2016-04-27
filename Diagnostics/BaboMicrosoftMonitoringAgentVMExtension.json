@@ -1,0 +1,16 @@
+{
+  "type": "Microsoft.Compute/virtualMachines/extensions",
+  "name": "Node_MicrosoftMonitoringAgent",
+  "location": "westeurope",
+  "properties": {
+    "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+    "type": "MicrosoftMonitoringAgent",
+    "typeHandlerVersion": "1.0",
+    "settings": {
+      "workspaceId": "bd0968ab-d107-4ee0-8bd0-2da69e8ddcd5"
+    },
+    "protectedSettings": {
+      "workspaceKey": "X0b7nDhOKn572miWMySryczyOGi6H2gMEzOhm4XXhVaAK/m8wq4HRIbl1Ka8HNlldqNXKRD62DxF+yDRi9rg7Q=="
+    }
+  }
+}

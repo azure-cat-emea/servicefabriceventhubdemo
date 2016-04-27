@@ -1,0 +1,34 @@
+Application Insights
+--------------------
+EventName=Alert AND "DeviceId":1
+
+Operational Insights
+--------------------
+All Log Events, Performance Counters and ETW Events
+---------------------------------------------------
+*
+
+ETW Events
+----------
+* Type=ServiceFabricReliableActorEvent Computer=_Node_1
+* Type=ServiceFabricReliableActorEvent TaskName="Message"| measure count(*) as EventCount by Computer|sort EventCount desc
+
+* Type=ServiceFabricReliableActorEvent Computer=_Node_1 TaskName=ActorSaveStateStop
+* Type=ServiceFabricReliableActorEvent Computer=_Node_1 TaskName=ActorSaveStateStop|select DeviceId, SaveStateExecutionTimeTicks, TimeGenerated|sort TimeGenerated desc
+* Type=ServiceFabricReliableActorEvent TaskName=ActorSaveStateStop| measure avg(SaveStateExecutionTimeTicks) as SaveStateTime by DeviceId_CF|sort SaveStateTime desc
+
+* EventSourceName="IoTDemo-DeviceActorService" and DeviceId_CF=1
+* EventSourceName="IoTDemo-DeviceActorService" and DeviceId_CF=1 and Alert_CF = "Alert"
+* EventSourceName="IoTDemo-DeviceActorService" TaskName="Message" Alert_CF="Alert"|measure count() as AlertCount by DeviceId_CF|sort AlertCount  desc
+
+Performance Counters
+--------------------
+Type=Perf 
+Type=Perf ObjectName="Service Fabric Actor Method"
+
+Application Logs
+----------------
+Type=Event Computer=Node-1
+Type=Event Computer=Node-1 EventLevelName=Error
+Type=Event Computer=Node-1 EventLevelName=Error|select RenderedDescription
+
